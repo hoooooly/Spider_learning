@@ -19,6 +19,12 @@ NEWSPIDER_MODULE = 'example.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 
+SQLITE_DB_NAME = 'scrapy.db'
+ITEM_PIPELINES = {
+    'example.pipelines.SQLitePipeline': 400,
+}
+
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
