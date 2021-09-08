@@ -7,4 +7,4 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # 启动scrapy，便于调试
-execute(["scrapy", "crawl", "jobbole"])
+execute(["scrapy", "crawl", "zhihu"])

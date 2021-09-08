@@ -7,6 +7,11 @@ name = "pypi"
 scrapy = "*"
 requests = {version = "*", index = "https://pypi.douban.com/simple"}
 scrapy-splash = "*"
+pillow = {version = "*", index = "http://pypi.douban.com/simple"}
+mysqlclient = {version = "*", index = "http://pypi.douban.com/simple"}
+undetected-chromedriver = {version = "*", index = "https://pypi.douban.com/simple"}
+opencv-python = {version = "*", index = "https://pypi.douban.com/simple"}
+selenium = {version = "*", index = "https://pypi.douban.com/simple"}
 
 [dev-packages]
 
