@@ -2,9 +2,9 @@ import re
 import json
 import scrapy
 import requests
-from urllib import parse
 from scrapy import Request
 # from scrapy.loader import ItemLoader
+from urllib import parse  # python3环境
 from ArticleSpider.utils import zhihu_login
 from ArticleSpider.settings import USER, PASSWORD
 
@@ -23,8 +23,8 @@ class ZhihuSpider(scrapy.Spider):
         """
             在这里模拟登录拿到cookies
             两种滑动验证码方案：
-            1.使用OpenCV识别
-            2.使用机器学习方法识别
+            1.使用OpenCV识别，识别率相对较低
+            2.使用机器学习方法识别, 可以使用百度大脑训练物体识别模型
         """
         login = zhihu_login.Login(USER, PASSWORD, 2)
         cookie_dict = login.login()
@@ -33,7 +33,18 @@ class ZhihuSpider(scrapy.Spider):
                 "user-agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36 Edg/92.0.902.84"
             }
             yield scrapy.Request(url=url, headers=headers, cookies=cookie_dict,
-                                 dont_filter=True, callback=self.parse_detail)
+                                 dont_filter=True, callback=self.parse)
+
+    def parse(self, response):
+        """
+        提取HTML页面中的所有url,并跟踪这些URL进行下一步爬取
+        如果提取的URL的格式为/questuion/xxxx 就下载之后直接进入解析函数
+        :param response:
+        :return:
+        """
+        all_urls = response.css("a::attr(href)").extract()
+        all_urls = [parse.urljoin(response.url, url) for url in all_urls]
+        print(all_urls)
 
     def parse_detail(self, response):
         pass

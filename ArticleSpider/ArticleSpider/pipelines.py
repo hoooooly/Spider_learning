@@ -113,7 +113,6 @@ class MysqlTwistedPipeline(object):
         cursor.execute(insert_sql, params)
 
 
-
 class JosnWithEncodingPipeline(object):
     """自定义json文件的导出"""
 

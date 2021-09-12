@@ -242,7 +242,7 @@ class Login(object):
 
         self.browser.get(self.url)
         login_element = self.browser.find_element(By.XPATH,
-                                                  '//*[@id="root"]/div/main/div/div/div/div[1]/div/form/div[1]/div[2]')
+                                                  '//*[@id="root"]/div/main/div/div/div/div[1]/div/div[1]/form/div[1]/div[2]')
         self.browser.execute_script("arguments[0].click();", login_element)
         time.sleep(5)
 
