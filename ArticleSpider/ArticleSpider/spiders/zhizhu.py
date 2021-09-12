@@ -28,9 +28,12 @@ class ZhihuSpider(scrapy.Spider):
         """
         login = zhihu_login.Login(USER, PASSWORD, 2)
         cookie_dict = login.login()
+
         for url in self.start_urls:
             headers = {
-                "user-agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36 Edg/92.0.902.84"
+                "HOST": "www.zhihu.com",
+                "Referer": "https://www.zhizhu.com",
+                'User-Agent': "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0"
             }
             yield scrapy.Request(url=url, headers=headers, cookies=cookie_dict,
                                  dont_filter=True, callback=self.parse)

@@ -3,7 +3,11 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+import os
 from scrapy import signals
+
+# 引入user-agent库
+from fake_useragent import UserAgent
 
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
@@ -101,3 +105,31 @@ class ArticlespiderDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+
+class RandomUserAgentMiddlware(object):
+    # 随机更换user-agent
+    def __init__(self, crawler):
+        super(RandomUserAgentMiddlware, self).__init__()
+        # 这里如果不能访问GitHub可能会报错，最后的办法就是获取下来代理的数据
+        """
+        访问https://fake-useragent.herokuapp.com/browsers/0.1.5保存为fake_useragent.json
+        def get_header():
+            location = os.getcwd() + '/fake_useragent.json'
+            ua = fake_useragent.UserAgent(path=location)
+            return ua.random
+        """
+        # 将fake_useragent.json放在本地目录就可以了
+        location = os.getcwd() + '/fake_useragent.json'
+        self.ua = UserAgent(path=location)
+        self.ua_type = crawler.settings.get("RANDOM_UA_TYPE", "random")
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(crawler)
+
+    def process_request(self, request, spider):
+        def get_ua():
+            return getattr(self.ua, self.ua_type)
+
+        request.headers.setdefault('User-Agent', get_ua())

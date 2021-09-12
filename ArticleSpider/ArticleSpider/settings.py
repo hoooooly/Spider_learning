@@ -27,7 +27,7 @@ ROBOTSTXT_OBEY = False
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-# DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
 # CONCURRENT_REQUESTS_PER_DOMAIN = 16
 # CONCURRENT_REQUESTS_PER_IP = 16
@@ -52,10 +52,16 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'ArticleSpider.middlewares.ArticlespiderDownloaderMiddleware': 543,
-# }
+# 下载中间件
+DOWNLOADER_MIDDLEWARES = {
+    # 'ArticleSpider.middlewares.RandomUserAgentMiddlware': 534,    # 设置代理user-agent
+    # 'ArticleSpider.middlewares.ArticlespiderDownloaderMiddleware': None,
+}
 
+USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0"
+
+# 定义随机agent类型
+RANDOM_UA_TYPE = "random"
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
 # EXTENSIONS = {
@@ -107,7 +113,6 @@ MYSQL_PORT = 3307
 MYSQL_DBNAME = "artice_spider"
 MYSQL_USER = "root"
 MYSQL_PASSWORD = "root"
-
 
 # 知乎登录信息
 USER = "17607119016"
